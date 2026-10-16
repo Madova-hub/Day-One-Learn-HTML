@@ -1,0 +1,51 @@
+window.CHALLENGE_DATA = {
+  challenges: [
+    {
+      id: "attributes_img",
+      intro:
+        "Inside the editor, complete the following steps:" +
+        "<ol style='margin:8px 0 0 18px;padding:0'>" +
+        "<li style='margin-top:8px'>Add an <code class='w3-codespan'>&lt;img&gt;</code> element after the paragraph</li>" +
+        "<li style='margin-top:8px'>Set <code class='w3-codespan'>src</code> to <strong>img_girl.jpg</strong></li>" +
+        "<li style='margin-top:8px'>Set <code class='w3-codespan'>alt</code> to <strong>Girl with a jacket</strong></li>" +
+        "<li style='margin-top:8px'>Set <code class='w3-codespan'>width</code> to <strong>250</strong></li>" +
+        "<li style='margin-top:8px'>Set <code class='w3-codespan'>height</code> to <strong>300</strong></li>" +
+        "</ol>",
+      starter:
+        "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<body>\n" +
+        "\n" +
+        "<h1>My Gallery</h1>\n" +
+        "<p>Here is a photo from my vacation:</p>\n" +
+        "\n" +
+        "<!-- Add an image here -->\n" +
+        "\n" +
+        "</body>\n" +
+        "</html>\n",
+      solution:
+        "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<body>\n" +
+        "\n" +
+        "<h1>My Gallery</h1>\n" +
+        "<p>Here is a photo from my vacation:</p>\n" +
+        "\n" +
+        "<img src=\"img_girl.jpg\" alt=\"Girl with a jacket\" width=\"250\" height=\"300\">\n" +
+        "\n" +
+        "</body>\n" +
+        "</html>\n",
+      requirements: [
+        { type: "regex", id: "hasImg", label: "Add an <code class=\"w3-codespan\">&lt;img&gt;</code> element", pattern: "<img\\s", flags: "i", linePattern: "<img\\s", lineFlags: "i" },
+        { type: "regex", id: "hasSrc", label: "Set <code class=\"w3-codespan\">src</code> to <strong>img_girl.jpg</strong>", pattern: "<img\\s[^>]*src\\s*=\\s*[\"']img_girl\\.jpg[\"']", flags: "i", linePattern: "<img\\s[^>]*src\\s*=", lineFlags: "i" },
+        { type: "regex", id: "hasAlt", label: "Set <code class=\"w3-codespan\">alt</code> to <strong>Girl with a jacket</strong>", pattern: "<img\\s[^>]*alt\\s*=\\s*[\"']Girl with a jacket[\"']", flags: "i", linePattern: "<img\\s[^>]*alt\\s*=", lineFlags: "i" },
+        { type: "regex", id: "hasWidth", label: "Set <code class=\"w3-codespan\">width</code> to <strong>250</strong>", pattern: "<img\\s[^>]*width\\s*=\\s*[\"']250[\"']", flags: "i", linePattern: "<img\\s[^>]*width\\s*=", lineFlags: "i" },
+        { type: "regex", id: "hasHeight", label: "Set <code class=\"w3-codespan\">height</code> to <strong>300</strong>", pattern: "<img\\s[^>]*height\\s*=\\s*[\"']300[\"']", flags: "i", linePattern: "<img\\s[^>]*height\\s*=", lineFlags: "i" }
+      ],
+      commonMistakes: [
+        { pattern: "<img\\s[^>]*(?!alt\\s*=)[^>]*/?\\s*>", flags: "i", msg: "Don't forget the <code class='w3-codespan'>alt</code> attribute - it describes the image for accessibility." },
+        { pattern: "src\\s*=\\s*img_girl", flags: "i", msg: "Attribute values should be wrapped in quotes: <code class='w3-codespan'>src=\"img_girl.jpg\"</code>." }
+      ]
+    }
+  ]
+};

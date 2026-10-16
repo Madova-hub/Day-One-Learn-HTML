@@ -1,0 +1,59 @@
+window.CHALLENGE_DATA = {
+  challenges: [
+    {
+      id: "headings_hierarchy",
+      intro:
+        "Inside the editor, complete the following steps:" +
+        "<ol style='margin:8px 0 0 18px;padding:0'>" +
+        "<li style='margin-top:8px'>Change the text <strong>My Website</strong> to use an <code class='w3-codespan'>&lt;h1&gt;</code> heading</li>" +
+        "<li style='margin-top:8px'>Change the text <strong>About Me</strong> to use an <code class='w3-codespan'>&lt;h2&gt;</code> heading</li>" +
+        "<li style='margin-top:8px'>Change the text <strong>My Hobbies</strong> to use an <code class='w3-codespan'>&lt;h2&gt;</code> heading</li>" +
+        "<li style='margin-top:8px'>Change the text <strong>Photography</strong> to use an <code class='w3-codespan'>&lt;h3&gt;</code> heading</li>" +
+        "</ol>",
+      starter:
+        "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<body>\n" +
+        "\n" +
+        "My Website\n" +
+        "\n" +
+        "About Me\n" +
+        "<p>I love building web pages.</p>\n" +
+        "\n" +
+        "My Hobbies\n" +
+        "\n" +
+        "Photography\n" +
+        "<p>I enjoy taking photos of nature.</p>\n" +
+        "\n" +
+        "</body>\n" +
+        "</html>\n",
+      solution:
+        "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<body>\n" +
+        "\n" +
+        "<h1>My Website</h1>\n" +
+        "\n" +
+        "<h2>About Me</h2>\n" +
+        "<p>I love building web pages.</p>\n" +
+        "\n" +
+        "<h2>My Hobbies</h2>\n" +
+        "\n" +
+        "<h3>Photography</h3>\n" +
+        "<p>I enjoy taking photos of nature.</p>\n" +
+        "\n" +
+        "</body>\n" +
+        "</html>\n",
+      requirements: [
+        { type: "regex", id: "hasH1", label: "Use <code class=\"w3-codespan\">&lt;h1&gt;</code> for <strong>My Website</strong>", pattern: "<h1>\\s*My Website\\s*</h1>", flags: "i", linePattern: "<h1>\\s*My Website", lineFlags: "i" },
+        { type: "regex", id: "hasH2About", label: "Use <code class=\"w3-codespan\">&lt;h2&gt;</code> for <strong>About Me</strong>", pattern: "<h2>\\s*About Me\\s*</h2>", flags: "i", linePattern: "<h2>\\s*About Me", lineFlags: "i" },
+        { type: "regex", id: "hasH2Hobbies", label: "Use <code class=\"w3-codespan\">&lt;h2&gt;</code> for <strong>My Hobbies</strong>", pattern: "<h2>\\s*My Hobbies\\s*</h2>", flags: "i", linePattern: "<h2>\\s*My Hobbies", lineFlags: "i" },
+        { type: "regex", id: "hasH3", label: "Use <code class=\"w3-codespan\">&lt;h3&gt;</code> for <strong>Photography</strong>", pattern: "<h3>\\s*Photography\\s*</h3>", flags: "i", linePattern: "<h3>\\s*Photography", lineFlags: "i" }
+      ],
+      commonMistakes: [
+        { pattern: "<h1>\\s*About Me\\s*</h1>", flags: "i", msg: "Section titles like <strong>About Me</strong> should use <code class='w3-codespan'>&lt;h2&gt;</code>, not <code class='w3-codespan'>&lt;h1&gt;</code>. Reserve <code class='w3-codespan'>&lt;h1&gt;</code> for the main title." },
+        { pattern: "<h2>\\s*Photography\\s*</h2>", flags: "i", msg: "<strong>Photography</strong> is a sub-topic under <strong>My Hobbies</strong>, so it should use <code class='w3-codespan'>&lt;h3&gt;</code>." }
+      ]
+    }
+  ]
+};

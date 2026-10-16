@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://srv.flashb.id/sf/1.1/37dc2490-e69a-50b6-b814-d999fdbee40b/render.html?m=true&csa=1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="ROBOTS" content="NOINDEX">
+    <meta name="ROBOTS" content="NOFOLLOW">
+    <meta name="ROBOTS" content="NOARCHIVE">
+    <meta name="ROBOTS" content="NOSNIPPET">
+    <meta name="ROBOTS" content="NOODP ">
+    <script>
+    (function() {
+        /**
+         * Neutralizes AudioContext constructors on a given window.
+         * @param {Window} win The target window.
+         */
+        var neutralizeAudio = function(win, iframe = false) {
+            try {
+                if (!win) return;
+
+                var noOp = function() { 
+                    console.log("AudioContext creation attempt blocked."+(iframe ? ' inside iframe':''));
+                    return null; 
+                };
+
+                // Override standard and prefixed APIs (webkit for Safari)
+                win.AudioContext = noOp;
+                win.webkitAudioContext = noOp;
+                win.OfflineAudioContext = noOp;
+                win.webkitOfflineAudioContext = noOp;
+                
+                // Optional: Also block the __pm_glbl global script if necessary
+                Object.defineProperty(win, '__pm_glbl', {
+                    set: function(val) { console.log("__pm_glbl write attempt blocked"+(iframe ? ' inside iframe':'')); },
+                    get: function() { return {}; },
+                    configurable: true // Important to be able to redefine it
+                });
+            } catch (e) {
+                // Silent for cross-origin iframes where access is denied
+            }
+        };
+
+        /**
+         * Processes an iframe element, waiting for it to load if necessary.
+         * @param {HTMLIFrameElement} iframe The iframe to process.
+         */
+        var processIframe = function(iframe) {
+            // The iframe may already be loaded, especially if it's empty (about:blank)
+            neutralizeAudio(iframe.contentWindow, true);
+            // Add a load listener to be sure to run it after the content has loaded
+            iframe.addEventListener('load', function() {
+                neutralizeAudio(iframe.contentWindow, true);
+            });
+        };
+
+        // Neutralize the main window immediately
+        neutralizeAudio(window);
+
+        var setupObservers = function() {
+            // Process iframes already present in the document
+            var existingIframes = document.getElementsByTagName('iframe');
+            for (var i = 0; i < existingIframes.length; i++) {
+                processIframe(existingIframes[i]);
+            }
+
+            // Observe the document to detect the addition of new iframes
+            if ('MutationObserver' in window) {
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes.forEach(function(node) {
+                            // If the added node is an iframe
+                            if (node.tagName === 'IFRAME') {
+                                processIframe(node);
+                            }
+                            // If the node contains iframes
+                            else if (node.nodeType === 1 && node.querySelectorAll) {
+                                var childIframes = node.querySelectorAll('iframe');
+                                for (var j = 0; j < childIframes.length; j++) {
+                                    processIframe(childIframes[j]);
+                                }
+                            }
+                        });
+                    });
+                });
+
+                // Start observing the body
+                if (document.body) {
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                }
+            }
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setupObservers);
+        } else {
+          setupObservers();
+        }
+    })();
+    </script>
+    
+    <!--<base target="_top">--><base href="." target="_top">
+    <script type="text/javascript">
+      // An empty, "#" or relative URL in the creative resolves to this render page: with the _top base
+      // target it would load render.html in the publisher page or a new tab. Navigations towards this
+      // origin are cancelled: link clicks (any button), form submissions and window.open.
+      (function () {
+        function isSelf(url) {
+          try { return new URL(url || "", document.baseURI).origin === location.origin; } catch (e) { return false; }
+        }
+        function onLink(e) {
+          var link = e.target && e.target.closest ? e.target.closest("a[href], area[href]") : null;
+          if (link && isSelf(link.getAttribute("href"))) { e.preventDefault(); }
+        }
+        document.addEventListener("click", onLink, true);
+        document.addEventListener("auxclick", onLink, true);
+        document.addEventListener("submit", function (e) {
+          var s = e.submitter;
+          var action = s && s.hasAttribute("formaction") ? s.getAttribute("formaction") : e.target.getAttribute("action");
+          if (isSelf(action)) { e.preventDefault(); }
+        }, true);
+        // form.submit() fires no submit event
+        var submit = HTMLFormElement.prototype.submit;
+        HTMLFormElement.prototype.submit = function () {
+          if (isSelf(this.getAttribute("action"))) { return; }
+          return submit.apply(this, arguments);
+        };
+        var open = window.open;
+        window.open = function (url) {
+          if (url && isSelf(String(url))) { return null; }
+          return open.apply(window, arguments);
+        };
+      })();
+    </script>
+    <script type="text/javascript">
+      window.onerror = function (e) { return true };
+      window.adSize = {width: 300, height: 600};
+    </script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            min-height: 100% !important;
+            background-color: transparent;
+        }
+    </style>
+    <script src="./sf_1_6_4_m.js.download"></script>
+
+    
+</head>
+<body id="sf_body" marginwidth="0" marginheight="0">
+    <script>document.addEventListener('DOMContentLoaded',function(){var e=document.createElement('iframe'),t=Math.floor(1e7*Math.random()).toString();e.width='300',e.height='600',e.src='https://js-sec.indexww.com/native/canvas-tmpl_v2.9.3.html?t='+t,e.addEventListener('load',()=>{e.contentWindow.postMessage({payload:'eyJuYXRpdmUiOnsidmVyIjoiMS4yIiwiYXNzZXRzIjpbeyJpZCI6NiwidmlkZW8iOnsidmFzdHRhZyI6Ilx1MDAzY1ZBU1QgdmVyc2lvbj1cIjQuMFwiXHUwMDNlXHUwMDNjQWQgaWQ9XCJkNDJhN2YwMi03MzA1LTRjY2ItYTAxNS1mNzNiMTY5NTgwYmVcIlx1MDAzZVx1MDAzY1dyYXBwZXJcdTAwM2VcdTAwM2NBZFN5c3RlbVx1MDAzZVhCaWRcdTAwM2MvQWRTeXN0ZW1cdTAwM2VcdTAwM2NJbXByZXNzaW9uXHUwMDNlXHUwMDNjIVtDREFUQVtodHRwczovL2EyMTg5LmNhc2FsZW1lZGlhLmNvbS9pbXByZXNzaW9uL3YyLzEyMzU2NzcvODUvZGI3cWZxbXRxMDYyMG9oOTdndGcvZDQyYTdmMDItNzMwNS00Y2NiLWEwMTUtZjczYjE2OTU4MGJlP3ZlcmlmaWVEPTFcdTAwMjZ1c2VySUQ9YXMuUm9MbXFQb0lBRjV0Z0FkUTV2QUFBXHUwMDI2Y21wcm89NDM1OFx1MDAyNmRldmljZVR5cGU9Mlx1MDAyNmV4cGlyeVRpbWU9MTc5MTk5NzQzNFx1MDAyNnByb2ZpbGVJRHM9XHUwMDI2Y3JlYXRpdmVJRD0zZGQ4YWQxXHUwMDI2cHViSUQ9MTk1NjcxXHUwMDI2Zm9ybWF0PXZpZGVvXHUwMDI2Y2hhbm5lbD1zaXRlXHUwMDI2ZWU9M0RdXVx1MDAzZVx1MDAzYy9JbXByZXNzaW9uXHUwMDNlXHUwMDNjSW1wcmVzc2lvblx1MDAzZVx1MDAzYyFbQ0RBVEFbaHR0cHM6Ly9rOHMxLWV2ZW50LXRyYWNrZXItZnIubGIuaW5kZXh3dy5jb20vZXZlbnQvY2k/YnM9MzAweDYwMFx1MDAyNmNhbXBpZD04ODA5MjU2XHUwMDI2Y2lkPTc0MTE5NjEyNlx1MDAyNmQ9ODVcdTAwMjZkYWI9d3d3Lnczc2Nob29scy5jb21cdTAwMjZkdD0yXHUwMDI2ZWM9NzAwXHUwMDI2aT0lMkZ3M3NjaG9vbHMuY29tJTJGY2hhbGxlbmdlJTJGYXNpZGUtZGVza3RvcC1idGYlMkZ2ZXJ0aWNhbCUyRmlkLWFiNjYzMmM1LTcwOTktNWFhYi05NzA5LTA0ZDM3N2EwMWI1Mi0wXHUwMDI2cD0xOTU2NzFcdTAwMjZwcj0wLjEzXHUwMDI2cz0xMjM1Njc3XHUwMDI2dHg9ZGI3cWZxbXRxMDYyMG9oOTdndGdcdTAwMjZ2cz03OV1dXHUwMDNlXHUwMDNjL0ltcHJlc3Npb25cdTAwM2VcdTAwM2NDcmVhdGl2ZXNcdTAwM2VcdTAwM2NDcmVhdGl2ZSBpZD1cIjc0MTE5NjEyNlwiIHNlcXVlbmNlPVwiMVwiXHUwMDNlXHUwMDNjTGluZWFyXHUwMDNlXHUwMDNjVHJhY2tpbmdFdmVudHNcdTAwM2VcdTAwM2NUcmFja2luZyBldmVudD1cImZpcnN0UXVhcnRpbGVcIlx1MDAzZVx1MDAzYyFbQ0RBVEFbaHR0cHM6Ly9hMjE4OS5jYXNhbGVtZWRpYS5jb20vZXZlbnRzL3YxLzMvMTIzNTY3Ny84NS9kYjdxZnFtdHEwNjIwb2g5N2d0Zy9kNDJhN2YwMi03MzA1LTRjY2ItYTAxNS1mNzNiMTY5NTgwYmU/XV1cdTAwM2VcdTAwM2MvVHJhY2tpbmdcdTAwM2VcdTAwM2NUcmFja2luZyBldmVudD1cIm1pZHBvaW50XCJcdTAwM2VcdTAwM2MhW0NEQVRBW2h0dHBzOi8vYTIxODkuY2FzYWxlbWVkaWEuY29tL2V2ZW50cy92MS80LzEyMzU2NzcvODUvZGI3cWZxbXRxMDYyMG9oOTdndGcvZDQyYTdmMDItNzMwNS00Y2NiLWEwMTUtZjczYjE2OTU4MGJlP11dXHUwMDNlXHUwMDNjL1RyYWNraW5nXHUwMDNlXHUwMDNjVHJhY2tpbmcgZXZlbnQ9XCJ0aGlyZFF1YXJ0aWxlXCJcdTAwM2VcdTAwM2MhW0NEQVRBW2h0dHBzOi8vYTIxODkuY2FzYWxlbWVkaWEuY29tL2V2ZW50cy92MS81LzEyMzU2NzcvODUvZGI3cWZxbXRxMDYyMG9oOTdndGcvZDQyYTdmMDItNzMwNS00Y2NiLWEwMTUtZjczYjE2OTU4MGJlP11dXHUwMDNlXHUwMDNjL1RyYWNraW5nXHUwMDNlXHUwMDNjVHJhY2tpbmcgZXZlbnQ9XCJjb21wbGV0ZVwiXHUwMDNlXHUwMDNjIVtDREFUQVtodHRwczovL2EyMTg5LmNhc2FsZW1lZGlhLmNvbS9ldmVudHMvdjEvNi8xMjM1Njc3Lzg1L2RiN3FmcW10cTA2MjBvaDk3Z3RnL2Q0MmE3ZjAyLTczMDUtNGNjYi1hMDE1LWY3M2IxNjk1ODBiZT9dXVx1MDAzZVx1MDAzYy9UcmFja2luZ1x1MDAzZVx1MDAzYy9UcmFja2luZ0V2ZW50c1x1MDAzZVx1MDAzY1ZpZGVvQ2xpY2tzXHUwMDNlXHUwMDNjQ2xpY2tUcmFja2luZ1x1MDAzZVx1MDAzYyFbQ0RBVEFbaHR0cHM6Ly9hMjE4OS5jYXNhbGVtZWRpYS5jb20vZXZlbnRzL3YxLzEvMTIzNTY3Ny84NS9kYjdxZnFtdHEwNjIwb2g5N2d0Zy9kNDJhN2YwMi03MzA1LTRjY2ItYTAxNS1mNzNiMTY5NTgwYmU/XV1cdTAwM2VcdTAwM2MvQ2xpY2tUcmFja2luZ1x1MDAzZVx1MDAzYy9WaWRlb0NsaWNrc1x1MDAzZVx1MDAzYy9MaW5lYXJcdTAwM2VcdTAwM2MvQ3JlYXRpdmVcdTAwM2VcdTAwM2MvQ3JlYXRpdmVzXHUwMDNlXHUwMDNjVkFTVEFkVGFnVVJJXHUwMDNlXHUwMDNjIVtDREFUQVtodHRwczovL2JpZC5nLmRvdWJsZWNsaWNrLm5ldC9kYm0vdmFzdD9kYm1fYz1BS0FtZi1EVWJZekhTNlIyNG9ZdzNUZWYwRzdfOFF1NDdmdjdSNDRDSk4zV2Y3Z1VnNlA0TWdTa09nZmtEdDVGOHZNTjk4alJCYXZiN1p5M0ZGaWVWUGVpRjNWMGR3N1U1UVx1MDAyNmNyeT0xXHUwMDI2ZGJtX2Q9QUtBbWYtQWdJd1ZPdTdWZjltUmFOZm1pbFBjUlpTS2FSV1l5UElLSTlLWUI5R0JlbmZYZTYyWnlTUFhhWUJhRWo5czJkNjVVTkgzOHhIeWJubmVBekloenhsVHdkdXExdjYxQmlVLUZKZkNYYXd4YjIwT1FBbFFLYXhLM2dHM0cycXl5RDV3U21vZ3VxNU5mY25zTEtEc3VEbm9rSzhqcXNWVE92ZURGeXI3VU5uT1psSTc3NlBKbUNHOTR5MkZYcEJ4bXo5b0thX0NvU2gwdVNMT1h5eUN1c3pscUpiVVlteDZmNlltYi00RzZPdC1OckpxWnMxODBuSnNwRVlwazZ1RGJESEw0QTVJWUdRVmpQSGFOVXBkLTlJTzhhSklwZzFNQ2xaRG9ENlNSYnpCcUpYX1ZOdkF4bTVDQkxuQlQzTmppSkJ3SFpkbExVYU9JWE9vSVloMEtGX3BTdldmandieFY1N3NsQlRhRVZBZWFzaGsxQlFkeVdFS1M1WTlxSXRZYVRtLVY5aGhyOW0xOTBJOWRPU2hWT1otOEMxWW5BZGFpMG5yMmxFWEFoRjBTRHZyNGFkbnVyOXN1VlNPaHFGU2RneDA0Z1FuR2RxbGdzX1Y1YWZ0eXdFOTVQcGZvZ3dEU01qbGtPTTh4RUdlM2ZvcG1HU0tBM1JJNEsxZjJOajE4WEFOWjhxalFOb3BXdFNrX1NiN2J6dVN1elhxNmpIUWdiLVRYa0ZSeDdZejNsdzZfXzktcFk2MDhfNXlmV3dBa1JqV01QMzNKcktIT2dNRWE0OU9tbnJxVEllazlvVEpON2F4S19qbGVncG1xLUFxT2ZOS0pscHJyZnpodlM2MUhpWENpeDJiMmRLUklHYVZTTGxId1dNcUhUWjNEcUFCVVdyNWZod0RYUVFXUW9mVGVxVFA3SjNtNEEzSFM1OW5qSFRpQ3padlRLNF9UYlJLZGdEQWwxYkJnYkpvY2x4UDNYVHFCZjE3dUswUUpQRHhKRnpCclJVSjlPRHVUWjZBejU0RXBRMzEwTW5KejlDYklNVFVSOXZrQTNRYkgtVk1xNUpOOGIzZkhFbnEwUDFIRFZQZDN2VmptQ0NpRjAtNFZTNUY5cGpFcTVNa1VBc3UzVWxGQ0Q5dEFnVHVFaXZkdUhJVF8wMHBGWDNnOWVWRFM0MENnVnJRZWZ4bk1ENkdXYU9JTXJMcHozTF8wbVdXWEYwcldJa25NNjhpM21GZ3ZmRy1PbU43VmY4dXlNMm16bjFuamtBQ0hKR0JqbnF3aFc0LVlDaDB0NV9RWlktV2JhSDNMS01vTmtLeU9lT0F5RGJsaUpTTjkzbFJKVDROU29MeWJpV19VNXJNLWl0V0RUcUlydWVnR2FsaFpJcnlWN1U5UmZlZGVmNVQtYW5FbDFoV3ZmOU5VWmYxWHFzT29ndVlMTEJHeW14R2RMN01qdEV1ME9HcGRNanEwRkFjcVR2RWVhRi1lSjBlTWcxbV9uYjdYOW9BNWwwOWlDSW42R3ZwZURTZTJOMmNSN1RtQXRVZTRranF2Yjk2SE1sTW80SWplanpNalJFS25qblYzMlFtZnlRME9zQ1hvRFVRTUQ1bTQtNk9ReHlKSGdaRzNZSURYMWw2dEpWa1kzbzkwc3o3aE1lTWxhbWY4cDJFYmFqaWVDSFZLN19SWDdkYlM2WGlsYkRzQU1sbXZPRDZXdUpZdGx5WDlDdWRiOFo3VGYtYkFHb0tLQk5kbUVOUUpZQ0xUR3RwcFdOMTB6RUljbFllYTVyNUY0MFNWYWZSdGwxeHBvVzR6WURUcjQtWXJvV2p1cS1idFlCX25KWjBCU0VqT0x5UGxNLUVhbWhUV3RrQTVfTWZ3VU1rYmFFRlVVZS11NFZBSl9aYkljcUdZNTVRaDdLMlVJbXRiT3I3Wk1LdU1DUERJSy1HNlhKeGhpNnBOMkNqcnhYZ2tEaUxMbG9wbTBrRzI1VlNmQ3V4ZHYyZktmeE9nWUdKRmdVSXVtOXBaVGp3aU1iRTQ3VkdyVzRtZnRabXZXZDVRMktvNEpMYjNhZl9xdlU0TXpkYkgzS0RrWVBXZzV4R2thal9oQ3d1RzlnNS1aWHoxUGktRGwybzdLbmFZUFN2SFI3OUotaWY2UFRScExvWllvX0xUWlFnaF9jTTZoX3ZsMXJ2bEdKV3dVc3l0cDE5QVB5cXRMNnRpaWJHUnQ5RHhJdHFpSVk3S3VHbHdPeVBUNVhrb1dmcFd0OGJmRGxEcEVVSzJrMmpURGRjdlhEd1F6bFluUjJDSmdDYm1TM3RRbDg0blpVYnFYM015dm9zdUlibVRBYTlrRXZUQlIway1JY05nc0VKWU1VNjdUZFJLSnNIc0dPakxaa21HNGZpeUNVUkdjUWoyTy1haTdaNDZ6RWdJV2ZYTzJpSHpOVk5NUk9PSktxR0QzSXc2TklQcEo2LWMzemdzZ3VXa0FyZHVtakV6bDU4UE9aREdDMEVRbWNMbjFHM1pBTVJsaGU2eVh1ZDdnUWEzRjJIU3VuemFYcmhfYnAxREhTM21UOEFVa3ZXMzNHWFpMV29BZmktcTVfeUZ3bE1TZG5JQVRYUXByeFlFR1BWWDFCWldPMjdVdGNBM2VzTnBLeXQ1SkM0eW10UWxVc2s3NUl5ZjdEWGpybEp6enNjTlFBSlhiQmJtWTlWYThQejZodk5UWU5SLVJUcHRDV1RYTHdxN0ktdE93bkxtcXJuLWFKVFdxVURwU1ZLX0VsZmtsV3IzS3ZYR3hjZXI2S0Z3XzJ3S1ZTRDhFOG5JazZfX2RDSlQ4T096TXJQUEgzczJZR21ya3JONG5yakkzOE92TXNlTm1UdUIxNGNRdmptTkdnd0g0Qkk2WHNia3h1Rl84czZKRjRWcjNJUDJxVGdMS1VxbGlpVGFLN3A5dlZhdWZLSnRRbWhfVWN0S3MtUXFxTXdPNk9LVlZYMlhMcHdkNjZ0S2RlelNTVFdwZ2pIQ3F1bFFaQTd3YWl6YkdGSmdScDctSjNNamswZWRGNEJFS0hXWFg5WEtPczMwLXhHaEZ0cHJrbkdmOHp0UXFhZEg4S0k0eHU1d0cydS13VWVoWTVCUjJVdUtKVjZtZnlJRjdPNGpwa3hSRU93S1otRGstaUdrQ0FpVGoxRFpuYTJObk1PVmhDSzhCZUo3a3E0UjJyMnBBczJsSWZobmRjN2ljbkpQUDVCR1ZLQURMY2V3TnpyVGRxRTl5aF85OW9xbnFYWVp0cFp1TXBNRUFVaFJhV0pHZ1doNWtBQlVKMHR1bzZoOWFLQ2FDNGNfZ05XSnp2TEFINVFLZ3pGRkhVSHBLeUdQdUt3QUw2c0JGbUFQRW1UY3VGdE9rR1ZlN2Qwc1AwZkRJV2JGM3VmQkJpNF9mTWJCMm9CeUdydnRWMVRpbnJCWG5yLTZBekFwRGxSRDhfd2lRU1B2NmRMNTZmVXVQVkpvY2syVmtVRDE1eXQtN01faXVRX1o3VVhjNGdILVAtcWE3b0drYnp5bHZrUG16dGE4SWkyMnQ2WnRlUFhUTWdXTWZnTDdZcTIwTDNURDIzOHdPanZrdEszWC1sNU95cWllR2wteTRtRUFyNnBRS0FUVS1BelBTOUxTb1lPdTh5U2Z3bXdpbkNmRHBsZzFjSVJhY0FUYjhhNzBtM0IzOVJab2xmSjVud21MZ2Fvb1NnelFWTjFqUFQzMGZ1MEpCNE8xVDZXVmRTZHVtYVpnejNzcTUzRldyY0pwNDdZU2pnUzVZNGh1VFdTZnU3OVN0U25pNXN0a2k1QXctSThQNGpVOV9pX2stcWx3UE51c3lFaXZoMUJ3dUZlajROcHlYQlFIOFlFV3ZlZHJ1dHhjUkNuREptM2I2UTllV2FwanREWjRaRk5POS1ORFZpTGFqd09aMXdiV1dpV3BUdzNwZERjU3Q0THhuQTVTcldIMVdGQko3dWZaTE1nS250NldVVERGY0VsMUs4Y1pTRUxZV3YyU1pTYXZnU2lycXJfd3dfT0hnV2o1ZWlrMHRMZGRjckdhOW5UNm5DMXFzbkxiNjA4UU5YWjBoUFVIejNFTFVyR0NLaTNraUM4MEZRalZSb2J4d1dQVlcxM29QeThyLUdRelNydC1oUDMyVS14a29JcUFDZzMzRHhKWXo0dUY4enVlQjhISl9wWVhYQVB4T0lleVh4eFcwc1NCOHhuSnFuTkJBRDIwQ2V0aTBwbkdtTXVleWR1bGQxRmc0SG5pM2ppOW9wbm8ybmlSTWprZDRjSVVnOWloU1pOdkExYi1kTGx2UDNMZml1bWxETU1zbE1ISkVuRDNXZDhzaU00c0Q2NllpbnRJR0JpcF9FaDkyMFdSTkdUV25DOWVON0lGVEc2NERFTnpacWFFZWI5Rzl6dnFmOWZma1RCU2xqNFN1TU9GTGNUa01HNzByUFAxZmtQMEdYOE1leVhoQXktaEtLU1FuWGdmczhCa2EzOVNvamtBcmJIbG9rQ05Xa2NpMGhpNFN4ckhrb2JacHE5NHJudlJoUFhMUndlTmlKaVp3YjRFazJ5NUVWTGFJdkRqQ21mUGlpNFN4emoyQVR1VzlYdUhDVTM4UGJrUnlEVGVSSEFLYmFKdTFHS3ZUUzlnaXVod1pQcmszQmZPZGVITnFjdzJncUFoa2FmY0Q4Nk9JSmxOME1XMTJGREw2c2ZHWUFya3JSYTlSS0hvdFJxQnItaE5kRXhqZk9TNG15UU0xclVRX1RHRkNUZU5SekdFLTdxVlFKS2ZaakVYaUEtUWhWOTV5Q0RabGcxQ3pJdWlLMW9IM1BpQ1o0cGhBekVGbXRGZFRINmV4YjRUU0JLZ1NsdE1ETDg1NjJrTy1YdWlKY05MN0hZLWphd1FsSHRPUTZaRTlfSjJvUm0xQnAyazJUVmUybHBvVHlDbXIzeS0ydWtQeHNoT0xXSkg4RG5fRjhYaUsxaUR4QmRtV2ZINXZyR2pESHRfWE1ueXJSZlFhZ0IwbnYzV2lzWUFJMFAyUk1wTG1vQTYwRk1vRDJUcHYtUWhsNVJKRWVISEVteTNYNTl2RzFWY25lU0t2cm9QcHpOb2JwaFJQTjZZWWg5MXUyNktwZEtGeVRaU1BrbGJ6YlRZd2ttelNmMVpLNWFKTm5jaTVyWGctOG01d3BtSFA5SjUteWVEZVZOQ2dSMEFlNEJIc0gtdlo2c1Z1dlZvVWg1UUYtVVQtekxUekFYUXBxSEMyS3RlQ3Blb2xIa2l4VVYwLXQxUHhuc3llSUhDQ0l3Zjg3dDR6RWV0VGZaM0dsdU9JeXlQUFdpMHJweFR4ak1samNCRjlDcjhmZXN3Z2RpdVBBY0Q0cDdsXzNVS0taUjkwY2JVc1JUUi1hUGtVWjJyNkhkLWE2Vk5DbDJiUjhTSWFtbUZfSW83YVc3SEFlLVF4NTlteGU4M1o4aTZDeTFyaTdIYkVkRzN1aENPcUh5dVRLUng2UnVOZURuUWdtaFN3QnpJZTcxQ0JMZkZfT0RzdV9vREwyYUc3RmdzUFo5Tm1xVkExZ3NZQ3dTbDRjc2IyeVRNbFR0S05rMTdqMFRVMF9CMlFnaUlUYkpvVFh6Z2g3NUFxcy1IeEdsM0RsejRrTTJjSDF1YS1vU3hrRF9ac2UzaEhhLUxDXzR5bHN0bzhMQnl4SDkwLU1FUmV5cnRyNHJWVlJVZWQ3X1VQT2N4Wk9rbWI2QkNGdHM2Z1BkaWYwR3NpMnkyNENONmQwRnZCLTVpQWVlVy1XbjhwOWVJZFBOcHo0MHFWZWlMakppZEQ5cFA4WkNueFNjNVVCLTdmUktBVXJLdEtCb0ZqZVZqODdCQ2lJTUVzdW5OVHpKVFZ4QVF1VHNYTkhNUmVJOHhfbWk2SkJlWk9ZdENCWVFJLTFuQVFBY2JQakRqQ3JxaVRuaFJGa1B6TXJSWk1LSFZocy1HbDRsQlpzX01kdDZyN3hFRUZMdWFoZzdkV0c4TlVOVEFGMjBDRjJEQWVtR0ZVQ0NFYlc2N24tNUpvdHJpUjViekhHREhCckpUazRRV2VLMk5neVZpNXpHQVpoMzVncnFxcU11NWI5Vk95NUgtQmktbVJCX05leUVqU3czTG9BQ2VRV1duQkNfc0cyYnhoLUI0U0YwYU1hSWlMM0RyVGVkQU5WWW02XzZuZmZfSG5lMklEdXgzdExSX21vSmNWQ1c4NDFyMXZHdzVkbmpiLXh1OUhLTXU5ZXNoeE5aRzZiRE9nbXRWMzJpcFg4aFJIU3c1RThVbEFnMUl1YXJQTWNFSG9RYkJCdGhxOXV0ajc1VEdMY0JkMkJQTE12T3NzZEJjbkFHd0tEV3E5N0VJR3NXRktCSTlUMFBrZGRBVG0xdVNjcnR0bmhxUUhYLXFzYnQyV1ZJZ3ZiYVNiRFJWbGZzMWtibVBBQ1EyaDE4ejluQ0pjQ1JQb2xaeDhWZGN4dEMwTHhUVm16MktoanhuV1FMamFldXREZTdGTTBjTDFhOURSNG1KSWJKREVXTXlDSWtUUXdcdTAwMjZjaWQ9Q0FRU3ZnSUFRTTRoM1BGdmFpSVhCbllnTjRlUV85R1o0Z0toeUtXY0pGS3dfVkVtME9Ebm1CU0xvdF9FZm9NdDV6cV9MR3VTRGxpY0hRbWFWWVllRDRVREplNWxOT2NnOFBUSncxWTh3NFJWM2pqN0JYakZGTlJsei1RaGQ4ZFc3SktqYjQ3ZHhHTmlwSHBZcDB3Wjh2cTdMWFRiSDZkbGh0UDJtckZhSzZrUzk0RVZIZGVMSFJyOHJHVmdJaE9lVFA3QnlteDhlRUdpRVdsX3l5ZDVxenR4Y25FZkdZOE9ESW9LaEkzMHAtVlBRVWY1dk13TXJWdWd5XzhXWlJ1dkd1Mmwxa3l2Z3QtWlh0OXFReEJhUW1fdk9iNmdpM0FiWjdhNHh0NW8zelROU0hvWlVqeUphTzRDNl9wbDJ6WEJxZnBIWHVZN0l0X2NXS2JGaW44WktyMjUzOUlEZlZKMGlyV2FVellRLTc5cV9XT1VSQ2VvMW5aMFVZTFFOU0dXc2tpSjY3UFhaUmUwYVQzTGt1amtVQmhuUzRmSGh2NnIxZHZJc2RzeUc1YllGdjhZQVFcdTAwMjZwcj0xMzphcy1uNmdBQUFBQ256SEFfdEd0VzNNNEk5Wm9KWVB1cWlPbDNuZ11dXHUwMDNlXHUwMDNjL1ZBU1RBZFRhZ1VSSVx1MDAzZVx1MDAzYy9XcmFwcGVyXHUwMDNlXHUwMDNjL0FkXHUwMDNlXHUwMDNjL1ZBU1RcdTAwM2UifX1dfX0=',lang:'en',token:t,etEvents:['703'],etURL:'https://k8s1-event-tracker-fr.lb.indexww.com/event/ci?bs=300x600&campid=8809256&cid=741196126&d=85&dab=www.w3schools.com&dt=2&ec=0&i=%2Fw3schools.com%2Fchallenge%2Faside-desktop-btf%2Fvertical%2Fid-ab6632c5-7099-5aab-9709-04d377a01b52-0&p=195671&pr=0.10&s=1235677&tx=db7qfqmtq0620oh97gtg&vs=79'},'*')}),e.style='border:none;',document.body.appendChild(e)});</script><img src="./ci" style="display: none;">
+    
+    <script>
+
+    const iframes = document.querySelectorAll('iframe');
+    for (let i = 0; i < iframes.length; i++) {
+      const iframe = iframes[i];
+      if (parseInt(iframe.width, 10)  >300 || parseInt(iframe.height, 10)  >600) {
+        iframe.style.width = "300px";
+        iframe.style.height = "600px";
+      }
+    }
+    </script>
+
+<iframe width="300" height="600" src="./canvas-tmpl_v2.9.3.html" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none;"></iframe></body></html>

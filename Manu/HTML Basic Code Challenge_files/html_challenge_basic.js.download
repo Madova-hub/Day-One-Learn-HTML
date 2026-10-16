@@ -1,0 +1,37 @@
+window.CHALLENGE_DATA = {
+  challenges: [
+    {
+      id: "basic_document",
+      intro:
+        "Inside the editor, complete the following steps:" +
+        "<ol style='margin:8px 0 0 18px;padding:0'>" +
+        "<li style='margin-top:8px'>Add the <code class='w3-codespan'>&lt;!DOCTYPE html&gt;</code> declaration</li>" +
+        "<li style='margin-top:8px'>Add an <code class='w3-codespan'>&lt;html&gt;</code> element</li>" +
+        "<li style='margin-top:8px'>Inside it, add a <code class='w3-codespan'>&lt;body&gt;</code> element</li>" +
+        "<li style='margin-top:8px'>Inside the body, add an <code class='w3-codespan'>&lt;h1&gt;</code> with the text <strong>Hello World</strong></li>" +
+        "</ol>",
+      starter:
+        "<!-- Build your HTML page here -->\n",
+      solution:
+        "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<body>\n" +
+        "\n" +
+        "<h1>Hello World</h1>\n" +
+        "\n" +
+        "</body>\n" +
+        "</html>\n",
+      requirements: [
+        { type: "regex", id: "hasDoctype", label: "Add the <code class=\"w3-codespan\">&lt;!DOCTYPE html&gt;</code> declaration", pattern: "<!DOCTYPE\\s+html>", flags: "i", linePattern: "<!DOCTYPE\\s+html>", lineFlags: "i" },
+        { type: "regex", id: "hasHtml", label: "Add an <code class=\"w3-codespan\">&lt;html&gt;</code> element", pattern: "<html>[\\s\\S]*</html>", flags: "i", linePattern: "</?html>", lineFlags: "i" },
+        { type: "regex", id: "hasBody", label: "Add a <code class=\"w3-codespan\">&lt;body&gt;</code> element inside &lt;html&gt;", pattern: "<html>[\\s\\S]*<body>[\\s\\S]*</body>[\\s\\S]*</html>", flags: "i", linePattern: "</?body>", lineFlags: "i" },
+        { type: "regex", id: "hasH1", label: "Add an <code class=\"w3-codespan\">&lt;h1&gt;</code> with the text <strong>Hello World</strong> inside &lt;body&gt;", pattern: "<body>[\\s\\S]*<h1>\\s*Hello\\s+World\\s*</h1>[\\s\\S]*</body>", flags: "i", linePattern: "<h1>", lineFlags: "i" }
+      ],
+      commonMistakes: [
+        { pattern: "<h1>\\s*Hello\\s+World\\s*</h1>[\\s\\S]*<body>", flags: "i", msg: "The <code class='w3-codespan'>&lt;h1&gt;</code> element should be placed <strong>inside</strong> the <code class='w3-codespan'>&lt;body&gt;</code> element." },
+        { pattern: "<h1>Hello World", flags: "i", msg: "Don't forget to close the <code class='w3-codespan'>&lt;h1&gt;</code> tag with <code class='w3-codespan'>&lt;/h1&gt;</code>." },
+        { pattern: "<!DOCTYPE>", flags: "", msg: "The DOCTYPE declaration needs the word <strong>html</strong>: <code class='w3-codespan'>&lt;!DOCTYPE html&gt;</code>." }
+      ]
+    }
+  ]
+};

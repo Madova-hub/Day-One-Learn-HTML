@@ -1,0 +1,124 @@
+/* General Reset & Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #f39c12; /* Warm egg-yellow */
+    --secondary-color: #d35400; /* Deep golden accent */
+    --dark-color: #2c3e50;
+    --light-bg: #fdfbf7;
+    --white: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Main Container Card */
+.container {
+    background-color: var(--white);
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-top: 6px solid var(--primary-color);
+}
+
+/* Header */
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+header h1 span {
+    color: var(--secondary-color);
+}
+
+/* About Section */
+.about p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Image Styling */
+.egg-card {
+    margin: 20px 0 30px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+.egg-card img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.egg-card img:hover {
+    transform: scale(1.02);
+}
+
+.egg-card figcaption {
+    padding: 12px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #666;
+    background-color: #fff9f0;
+}
+
+/* Footer / Contact */
+footer {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+footer h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 0.95rem;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    
+    header h1 {
+        font-size: 1.4rem;
+    }
+}
